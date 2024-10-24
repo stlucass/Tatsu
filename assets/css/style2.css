@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background: rgb(12, 12, 12);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-family: 'Montserrat', sans-serif;
+	height: auto;
+	margin: 20px 0 50px;
+}
+
+.container {
+	position: relative;
+	max-width: 500px;
+	width: 100%;
+	background-image: linear-gradient(to right bottom, hsl(0, 100%, 50%), hsl(0, 100%, 13%), hsl(0, 100%, 58%));
+	padding: 25px;
+	border-radius: 8px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.container header {
+	font-size: 1.2rem;
+	color: #fff;
+	font-weight: 400;
+	text-align: center;
+}
+
+.container .form {
+	margin-top: 15px;
+}
+
+.form .input-box {
+	width: 100%;
+	margin-top: 10px;
+}
+
+.input-box label {
+	color: #fff;
+}
+.gender-box label {
+	color: #fff;
+}
+
+.form :where(.input-box input, .select-box) {
+	position: relative;
+	height: 35px;
+	width: 100%;
+	outline: none;
+	font-size: 1rem;
+	color: #000;
+	margin-top: 5px;
+	border: 1px solid #EE4E34;
+	border-radius: 6px;
+	padding: 0 15px;
+	background: #FCEDDA;
+}
+
+.input-box input:focus {
+	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.form .column {
+	display: flex;
+	column-gap: 15px;
+}
+
+.form .gender-box {
+	margin-top: 10px;
+}
+
+.form :where(.gender-option, .gender) {
+	display: flex;
+	align-items: center;
+	column-gap: 50px;
+	flex-wrap: wrap;
+}
+
+.form .gender {
+	column-gap: 5px;
+}
+
+.gender input {
+	accent-color: #EE4E34;
+}
+
+.form :where(.gender input, .gender label) {
+	cursor: pointer;
+}
+
+.gender label {
+	color: #fff;
+}
+
+.address :where(input, .select-box) {
+	margin-top: 10px;
+}
+
+.select-box select {
+	height: 100%;
+	width: 100%;
+	outline: none;
+	border: none;
+	color: #808080;
+	font-size: 1rem;
+	background: #FCEDDA;
+}
+
+.form button {
+	height: 40px;
+	width: 100%;
+	color: #fff;
+	font-size: 1rem;
+	font-weight: 400;
+	margin-top: 15px;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	background: #000;
+}
+
+.form button:hover {
+	background: #d80000;
+}
+
+.btn {
+	text-decoration: none;
+	position: relative;
+	background-image: linear-gradient(to right bottom, hsl(0, 100%, 50%), hsl(0, 100%, 13%), hsl(0, 100%, 58%));
+	color: rgb(255, 255, 255);
+	font-size: 1.0rem;
+	font-weight: 600;
+	width: 50vw;
+	max-width: max-content;
+	min-width: 180px;
+	height: 50px;
+	display: grid;
+	place-items: center;
+	padding-inline: 30px;
+	clip-path: polygon(0% 0%, 90% 0, 100% 30%, 100% 100%, 0 100%);
+	overflow: hidden;
+}
+
+.btn::before {
+	content: "";
+	position: absolute;
+	top: var(--top, 50%);
+	left: var(--left, 50%);
+	width: 100%;
+	padding-block-end: 100%;
+	background-color: rgb(255, 66, 66);
+	transform: translate(-50%, -50%) scale(0);
+	border-radius: 50%;
+	z-index: -1;
+	transition: transform 500ms ease;
+}
+
+.btn:is(:hover, :focus-visible)::before {
+	transform: translate(-50%, -50%) scale(1);
+}

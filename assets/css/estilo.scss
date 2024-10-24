@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600&display=swap');
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    outline: none; border: none;
+    transition: all 0.2s linear;
+}
+
+html{
+    font-size: 62.5%;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5rem;
+    min-height: 100vh;
+    background: linear-gradient(90deg, #2b2b2b 60%, #ae2727 40.1%);
+    padding-bottom: 7rem;
+
+    form{
+        padding: 2rem;
+        width: 70rem;
+        background: #fff;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+
+        .row{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+
+            .col{
+                flex: 1 1 25rem;
+
+                .title{
+                    font-size: 2rem;
+                    color: #333;
+                    padding-bottom: 0.5rem;
+                }
+
+                .inputBox{
+                    margin: 1.5rem 0;
+
+                    span{
+                        margin-bottom: 1rem;
+                        display: block;
+                        color: black;
+                        font-weight: 600;
+                        font-size: 1.5rem
+                    }
+
+                    input{
+                        width: 100%;
+                        border: 0.1rem solid #ccc;
+                        padding: 1rem 1.5rem;
+                        font-size: 1.5rem;
+
+                        &:focus{
+                            border: 0.1rem solid #000;
+                        }
+                    }
+
+                    img{
+                        height: 3.4rem;
+                        margin-top: 0.5rem;
+                        filter: drop-shadow(0 0 0.1rem #000);
+                    }
+                }
+
+                .flex{
+                    display: flex;
+                    gap: 1.5rem;
+
+                    .inputBox{
+                        margin-top: 0.5rem;
+                    }
+                }
+            }
+        }
+
+        .sunmit-btn{
+            width: 100%;
+            padding: 1.2rem;
+            font-size: 1.7rem;
+            background: #ae2727;
+            color: #fff;
+            margin-top: 0.5rem;
+            cursor: pointer;
+
+            &:hover{
+                background: #cc2e2e;
+            }
+        }
+    }
+}
