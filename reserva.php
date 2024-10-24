@@ -18,6 +18,16 @@
 
 <body style="background-color: #000; color: #a3a3a3; font-weight: 100;">
     <?php
+    session_start(); // Inicia a sessão
+    
+    // Verifica se a sessão está ativa
+    if (!isset($_SESSION['email'])) {
+        echo '<script>alert("Você precisa estar logado para acessar esta página.");</script>';
+        // Usar exit() após echo pode prevenir o redirecionamento.
+        echo '<script>window.location.href = "login.php";</script>';
+        exit();
+    }
+
     include('data/conexao.php');
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['nomeCliente'])) {
         $nomeCliente = $_POST['nomeCliente'];
@@ -29,7 +39,13 @@
         $tipoReserva = $_POST['tipoReserva'];
         $observacoes = $_POST['observacoes'];
 
-        $sql = "INSERT INTO reserva (nome_cliente, email_cliente, quantidade_pessoas, dia_reserva, hora_reserva, area_restaurante, tipo_reserva, observacoes) VALUES ('$nomeCliente', '$emailCliente', '$quantidadePessoas', '$diaReserva', '$horaReserva', '$areaRestaurante', '$tipoReserva', '$observacoes')";
+        $sql = "INSERT INTO RESERVA (NOME_CLIENTE, EMAIL_CLIENTE, QUANTIDADE_PESSOAS, DIA_RESERVA, HORA_RESERVA, AREA_RESTAURANTE, TIPO_RESERVA, OBSERVACOES)
+         VALUES ('$nomeCliente', '$emailCliente', '$quantidadePessoas', '$diaReserva', '$horaReserva', '$areaRestaurante', '$tipoReserva', '$observacoes')";
+
+        if ($conn->query($sql) === TRUE) {
+        } else {
+            echo "Erro: " . $sql . "<br>" . $conn->error;
+        }
 
     }
     ?>

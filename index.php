@@ -1,3 +1,7 @@
+<?php
+include('data/conexao.php');
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -31,10 +35,7 @@
 
 <body id="top">
 
-    <?php
-  include('data/conexao.php');
-  session_start();
-  ?>
+
     <!-- HEADER -->
     <header class="header active" data-header>
         <div class="container">
@@ -70,24 +71,24 @@
             <?php endif; ?>
 
             <?php
-      // Verifica se o formulário foi enviado
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Obtém o valor do campo cod_adm
-        $cod_adm = $_POST['cod_adm'];
+            // Verifica se o formulário foi enviado
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                // Obtém o valor do campo cod_adm
+                $cod_adm = $_POST['cod_adm'];
 
-        // Verifica se o valor é igual a 100
-        if ($cod_adm == '100') {
-          // Redireciona para reserva_adm.php
-          header('Location: reserva_adm.php');
-          exit(); // Importante sair para evitar que o restante do código seja executado
-        } else {
-          $erro = "Código inválido. Tente novamente."; // Mensagem de erro
-        }
-      }
+                // Verifica se o valor é igual a 100
+                if ($cod_adm == '100') {
+                    // Redireciona para reserva_adm.php
+                    header('Location: reserva_adm.php');
+                    exit(); // Importante sair para evitar que o restante do código seja executado
+                } else {
+                    $erro = "Código inválido. Tente novamente."; // Mensagem de erro
+                }
+            }
 
-      include('data/conexao.php');
-      
-      ?>
+            include('data/conexao.php');
+
+            ?>
             <button class="nav-toggle-btn" aria-label="toggle menu" data-nav-toggler>
                 <span class="line line-1"></span>
                 <span class="line line-2"></span>

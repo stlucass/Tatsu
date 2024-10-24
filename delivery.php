@@ -17,7 +17,16 @@
 <body>
     <!-- PHP -->
     <?php
+    session_start(); // Inicia a sessão
     include('data/conexao.php');
+
+    // Verifica se o usuário está logado
+    if (!isset($_SESSION['email'])) {
+        echo '<script>alert("Você precisa estar logado para acessar esta página.");</script>';
+        // Usar exit() após echo pode prevenir o redirecionamento.
+        echo '<script>window.location.href = "login.php";</script>';
+        exit();
+    }
     ?>
     <!-- FIM PHP -->
 
@@ -160,16 +169,14 @@
                             </div>
                             <div class="details col-sm-9">
                                 <div class="item__header">
-                                    <h3 class="item__title">Suco de Yuzu</h3>
+                                    <h3 class="item__title">Cerveja Japonesa</h3>
                                     <span class="item__dots"></span>
-                                    <span class="item__price">R$ 18</span>
+                                    <span class="item__price">R$ 20</span>
                                 </div>
-                                <p class="item__description">Suco cítrico japonês, feito a partir da fruta yuzu,
-                                    conhecido por seu sabor único, que é uma mistura de limão, tangerina e toranja.
-                                    Perfeito para uma bebida leve e refrescante.
-                                </p>
+                                <p class="item__description">Cerveja leve e refrescante, com sabor equilibrado e
+                                    aromas sutis, perfeita para acompanhar pratos japoneses.</p>
                                 <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id="7"
-                                    data-name="Suco de Yuzu" data-price="18" data-quantity="1"
+                                    data-name="Cerveja Japonesa" data-price="20" data-quantity="1"
                                     data-image="./assets/images/drink-3.png">Adicionar</button>
                             </div>
                         </div>
@@ -179,120 +186,101 @@
                             </div>
                             <div class="details col-sm-9">
                                 <div class="item__header">
-                                    <h3 class="item__title">Cerveja Asahi</h3>
+                                    <h3 class="item__title">Refrigerante</h3>
                                     <span class="item__dots"></span>
-                                    <span class="item__price">R$ 20</span>
+                                    <span class="item__price">R$ 8</span>
                                 </div>
-                                <p class="item__description">Cerveja lager japonesa de sabor leve e refrescante, com um
-                                    final seco, perfeita para acompanhar pratos tradicionais japoneses.
-                                </p>
+                                <p class="item__description">Bebida carbonatada com sabor refrescante, disponível em
+                                    vários sabores.</p>
                                 <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id="8"
-                                    data-name="Cerveja Asahi" data-price="20" data-quantity="1"
+                                    data-name="Refrigerante" data-price="8" data-quantity="1"
                                     data-image="./assets/images/drink-4.png">Adicionar</button>
                             </div>
                         </div>
-
                     </div>
                     <!-- FIM MENU BEBIDA -->
                     <!-- INICIO MENU DOCES -->
-                    <div class="menu" id="docesMenu">
+                    <div class="menu menu--is-visible" id="docesMenu">
                         <div class="item row align-items-center">
                             <div class="col-sm-3 pr-5">
-                                <img class="product-img" src="./assets/images/doce-1.png">
+                                <img class="product-img" src="./assets/images/doces-1.png">
                             </div>
                             <div class="details col-sm-9">
                                 <div class="item__header">
                                     <h3 class="item__title">Mochi de Morango</h3>
                                     <span class="item__dots"></span>
-                                    <span class="item__price">R$ 18</span>
+                                    <span class="item__price">R$ 15</span>
                                 </div>
-                                <p class="item__description">Bolinho de arroz glutinoso recheado com pasta de feijão
-                                    vermelho doce e um morango fresco no centro. Uma combinação única de texturas e
-                                    sabores.
-                                </p>
+                                <p class="item__description">Delicioso mochi recheado com pasta de feijão doce e pedaços
+                                    de
+                                    morango fresco.</p>
                                 <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id="9"
-                                    data-name="Mochi de Morango" data-price="18" data-quantity="1"
-                                    data-image="./assets/images/doce-1.png">Adicionar</button>
+                                    data-name="Mochi de Morango" data-price="15" data-quantity="1"
+                                    data-image="./assets/images/doces-1.png">Adicionar</button>
                             </div>
                         </div>
                         <div class="item row align-items-center">
                             <div class="col-sm-3 pr-5">
-                                <img class="product-img" src="./assets/images/doce-2.png">
+                                <img class="product-img" src="./assets/images/doces-2.png">
                             </div>
                             <div class="details col-sm-9">
                                 <div class="item__header">
                                     <h3 class="item__title">Dorayaki</h3>
                                     <span class="item__dots"></span>
-                                    <span class="item__price">R$ 15</span>
+                                    <span class="item__price">R$ 18</span>
                                 </div>
-                                <p class="item__description">Panquecas japonesas macias recheadas com anko (pasta de
-                                    feijão azuki doce). Um doce clássico e reconfortante.
-                                </p>
+                                <p class="item__description">Bolo recheado com pasta de feijão doce, servido em duas
+                                    camadas macias.</p>
                                 <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id="10"
-                                    data-name="Dorayaki" data-price="15" data-quantity="1"
-                                    data-image="./assets/images/doce-2.png">Adicionar</button>
+                                    data-name="Dorayaki" data-price="18" data-quantity="1"
+                                    data-image="./assets/images/doces-2.png">Adicionar</button>
                             </div>
                         </div>
                         <div class="item row align-items-center">
                             <div class="col-sm-3 pr-5">
-                                <img class="product-img" src="./assets/images/doce-3.png">
+                                <img class="product-img" src="./assets/images/doces-3.png">
                             </div>
                             <div class="details col-sm-9">
                                 <div class="item__header">
-                                    <h3 class="item__title">Cheesecake de Matcha</h3>
+                                    <h3 class="item__title">Pudim de Matchá</h3>
                                     <span class="item__dots"></span>
                                     <span class="item__price">R$ 22</span>
                                 </div>
-                                <p class="item__description">Cheesecake cremoso e delicado, feito com chá verde matcha,
-                                    servido com uma base crocante de biscoito. Equilibra doçura e um toque amargo do
-                                    matcha.
-                                </p>
+                                <p class="item__description">Pudim cremoso de matchá, servido com calda de caramelo e
+                                    granulado de feijão doce.</p>
                                 <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id="11"
-                                    data-name="Cheesecake de Matcha" data-price="22" data-quantity="1"
-                                    data-image="./assets/images/doce-3.png">Adicionar</button>
+                                    data-name="Pudim de Matchá" data-price="22" data-quantity="1"
+                                    data-image="./assets/images/doces-3.png">Adicionar</button>
                             </div>
                         </div>
                         <div class="item row align-items-center">
                             <div class="col-sm-3 pr-5">
-                                <img class="product-img" src="./assets/images/doce-4.png">
+                                <img class="product-img" src="./assets/images/doces-4.png">
                             </div>
                             <div class="details col-sm-9">
                                 <div class="item__header">
-                                    <h3 class="item__title">Taiyaki de Chocolate</h3>
+                                    <h3 class="item__title">Bolo de Chá Verde</h3>
                                     <span class="item__dots"></span>
                                     <span class="item__price">R$ 20</span>
                                 </div>
-                                <p class="item__description">Massa doce em formato de peixe, recheada com um cremoso
-                                    chocolate derretido. Uma combinação de tradição e modernidade em um só doce.
-                                </p>
+                                <p class="item__description">Bolo fofo e úmido de chá verde, coberto com cream cheese e
+                                    polvilhado com matchá.</p>
                                 <button class="btn btn-sm btn-outline-primary my-cart-btn" data-id="12"
-                                    data-name="Taiyaki de Chocolate" data-price="20" data-quantity="1"
-                                    data-image="./assets/images/doce-4.png">Adicionar</button>
+                                    data-name="Bolo de Chá Verde" data-price="20" data-quantity="1"
+                                    data-image="./assets/images/doces-4.png">Adicionar</button>
                             </div>
                         </div>
                     </div>
                     <!-- FIM MENU DOCES -->
                 </div>
-                <!-- FIM BLOCK -->
-                <script src="./assets/js/mycart.js"></script>
-                <script src="./assets/js/mycart-custom.js"></script>
             </section>
         </div>
     </div>
-    <div class="nav-item my-cart-icon">
-        <img src="./assets/images/cart.svg" style="width:20px;"> <span class="badge badge-notify my-cart-badge"> </span>
-    </div>
-    <footer class="block footer1 footer text-center">
-        <p>&copy; <a href="https://bootstrapstarter.com/bootstrap-templates/template-fooddelivery-bootstrap-html/">Tatsu
-                Sushi Bar</a> </p>
-    </footer>
-    <script src="./assets/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="./assets/js/main.js"></script>
+    <script src="./assets/js/mycart.js"></script>
     <script>
     AOS.init();
-    </script>
-    <script>
-    < script src = "./assets/js/custom-general.js" >
     </script>
 </body>
 

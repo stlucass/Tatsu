@@ -14,31 +14,32 @@
 
     <!-- PHP -->
     <?php
-  include('data/conexao.php');
-  session_start();
-  // CADASTRAR USUARIO 
-  if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cadastrar'])) {
-    $email = $_POST['email'];
-    $_SESSION['email'] = $email;
+    include('data/conexao.php');
+    session_start();
+    // CADASTRAR USUARIO 
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['cadastrar'])) {
+        $email = $_POST['email'];
+        $_SESSION['email'] = $email;
 
-    header("Location: index.php");
-    $nome = $_POST['nome']; //GET NOME
-    $email = $_POST['email']; //GET EMAIL
-    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT); // HASH DA SENHA
-    $data_nasc = $_POST['data_nasc']; //GET DATA DE NASCIMENTO
-    $genero = $_POST['genero']; //GET GENERO
-    $endereco = $_POST['endereco']; //GET ENDERECO
-    $estado = $_POST['estado']; //GET ESTADO
-  
-    $sql = "INSERT INTO usuario (nome_usuario, email_usuario, senha_usuario, data_nasc, genero, endereco, estado) 
+        header("Location: index.php");
+        $nome = $_POST['nome']; //GET NOME
+        $email = $_POST['email']; //GET EMAIL
+        $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT); // HASH DA SENHA
+        $data_nasc = $_POST['data_nasc']; //GET DATA DE NASCIMENTO
+        $genero = $_POST['genero']; //GET GENERO
+        $endereco = $_POST['endereco']; //GET ENDERECO
+        $estado = $_POST['estado']; //GET ESTADO
+    
+        $sql = "INSERT INTO usuario(NOME_USUARIO, EMAIL_USUARIO, SENHA_USUARIO, DATA_NASC, GENERO, ENDERECO, ESTADO)
+ 
 	VALUES ('$nome', '$email', '$senha', '$data_nasc', '$genero', '$endereco', '$estado')"; //INSERÇÃO DE DADOS NA TABELA USUARIO
-  
-    if ($conn->query($sql) === TRUE) { //VERIFICAÇÃO E TRATAMENTO DE ERROS
-      echo "Cadastro realizado com sucesso!";
-    } else {
+    
+        if ($conn->query($sql) === TRUE) { //VERIFICAÇÃO E TRATAMENTO DE ERROS
+            echo "Cadastro realizado com sucesso!";
+        } else {
+        }
     }
-  }
-  ?>
+    ?>
 
     <!-- FIM PHP -->
 
