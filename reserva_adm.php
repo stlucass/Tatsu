@@ -85,13 +85,11 @@
         <th>TIPO</th>
         <th>ID</th>
         <th>OBSERVAÇÕES</th>
-        <th>ID_USUARIO</th>
     </tr>
     </thead>
     <tbody>";
 
             // Verifica se existem registros
-            $_SESSION['id_usuario'] = $id_usuario;
             if ($stmt->num_rows > 0) {
                 while ($row = $stmt->fetch_assoc()) {
                     echo "<tr>
@@ -104,7 +102,6 @@
             <td>" . htmlspecialchars($row["tipo_reserva"]) . "</td>
             <td>" . htmlspecialchars($row["id_reserva"]) . "</td>
             <td>" . htmlspecialchars(string: $row["observacoes"]) . "</td>
-            <td>" . htmlspecialchars($id_usuario) . "</td>
 
             </tr>";
                 }

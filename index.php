@@ -278,7 +278,7 @@ session_start();
 
             <!-- PRÊMIOS -->
 
-            <section class="section news" aria-label="our latest news" id="premios">
+            <section class="section premios" aria-label="our latest premios" id="premios">
                 <div class="container">
 
                     <p class="section-subtitle" data-reveal="bottom">Prêmios</p>
@@ -292,10 +292,10 @@ session_start();
                         reconhecida.
                     </p>
 
-                    <ul class="news-list">
+                    <ul class="premios-list">
 
                         <li data-reveal="bottom">
-                            <div class="news-card">
+                            <div class="premios-card">
 
                                 <figure class="card-banner img-holder" style="--width: 600; --height: 400;">
                                     <img src="./assets/images/sashimi.jpg" width="600" height="400" loading="lazy"
@@ -334,7 +334,7 @@ session_start();
                         </li>
 
                         <li data-reveal="bottom">
-                            <div class="news-card">
+                            <div class="premios-card">
 
                                 <figure class="card-banner img-holder" style="--width: 600; --height: 400;">
                                     <img src="./assets/images/ramen.jpg" width="600" height="400" loading="lazy"
@@ -372,7 +372,7 @@ session_start();
                         </li>
 
                         <li data-reveal="bottom">
-                            <div class="news-card">
+                            <div class="premios-card">
 
                                 <figure class="card-banner img-holder" style="--width: 600; --height: 400;">
                                     <img src="./assets/images/sushi.jpg" width="600" height="400" loading="lazy"
@@ -526,7 +526,7 @@ session_start();
 
                     <p class="title footer-list-title ">Central do administrador:</p>
 
-                    <form action="reserva_adm.php" method="get" class="footer-form">
+                    <form action="reserva_adm.php" method="post" class="footer-form">
                         <input type="text" name="cod_adm" required placeholder="Seu código de administrador..."
                             autocomplete="off" class="input-field">
 
