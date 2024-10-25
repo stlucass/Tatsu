@@ -1,0 +1,85 @@
+.btnvoltar {
+    z-index: 10;
+    position: relative;
+    background-image: linear-gradient(to right bottom, hsl(0, 100%, 50%), hsl(0, 100%, 13%), hsl(0, 100%, 58%));
+    color: rgb(255, 255, 255);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 300;
+    width: 50vw;
+    max-width: max-content;
+    min-width: 180px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    padding-inline: 30px;
+    clip-path: polygon(0% 0%, 90% 0, 100% 30%, 100% 100%, 0 100%);
+    overflow: hidden;
+    left: 50px;
+    top: 70px;
+    text-decoration: none;
+  }
+  
+  .btnvoltar::before {
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    content: "";
+    position: absolute;
+    top: var(--top, 50%);
+    left: var(--left, 50%);
+    width: 100%;
+    padding-block-end: 100%;
+    background-color: rgb(255, 66, 66);
+    transform: translate(-50%, -50%) scale(0);
+    border-radius: 50%;
+    z-index: -1;
+    transition: transform 500ms ease;
+  }
+  
+  .btnvoltar:is(:hover, :focus-visible)::before {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .oculto {
+    display: none;
+}
+
+.ui-dialog {
+    background-color: #131313; /* cor de fundo branca */
+    border: 1px solid #ffffff; /* borda cinza */
+    padding: 10px; /* espaçamento interno */
+    width: 300px; /* largura do dialog */
+  }
+  
+  .ui-dialog-title {
+    background-color: #333; /* cor de fundo do título */
+    color: #fff; /* cor do texto do título */
+    padding: 10px; /* espaçamento interno do título */
+    margin-bottom: 10px; /* adiciona espaçamento entre o título e o conteúdo */
+    margin-right: 100px;
+  }
+  
+  .ui-dialog-content {
+    padding: 20px; /* adiciona espaçamento interno ao conteúdo */
+  }
+
+  .ui-dialog-buttonpane {
+    background-color: #131313; /* cor de fundo do painel de botões */
+    border-top: 1px solid #ddd; /* borda superior do painel de botões */
+    padding: 10px; /* espaçamento interno do painel de botões */
+    text-align: center; /* centraliza os botões */
+  }
+  
+  .ui-dialog-button {
+    background-color: #000000; /* cor de fundo do botão */
+    color: #fff; /* cor do texto do botão */
+    padding: 10px 20px; /* espaçamento interno do botão */
+    border: none; /* sem borda */
+    border-radius: 5px; /* arredondamento do botão */
+    cursor: pointer; /* ponteiro do mouse */
+    margin: 10px; /* adiciona espaçamento entre os botões */
+  }
+  
+  .ui-dialog-button:hover {
+    background-color: #610000; /* cor de fundo do botão ao passar o mouse */
+  }
