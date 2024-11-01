@@ -110,19 +110,15 @@ session_start();
 
             <?php
             // Verifica se o formulário foi enviado
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                // Obtém o valor do campo cod_adm
-                $cod_adm = $_POST['cod_adm'];
+         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $cod_adm = $_POST['cod_adm'];
+    if ($cod_adm == '100') {
+        echo "<script>abrirModal();</script>";
+    } else {
+        $erro = "Código inválido. Tente novamente.";
+    }
+}
 
-                // Verifica se o valor é igual a 100
-                if ($cod_adm == '100') {
-                    // Redireciona para reserva_adm.php
-                    header('Location: reserva_adm.php');
-                    exit(); // Importante sair para evitar que o restante do código seja executado
-                } else {
-                    $erro = "Código inválido. Tente novamente."; // Mensagem de erro
-                }
-            }
 
             include('data/conexao.php');
 
@@ -565,9 +561,8 @@ session_start();
                     <p class="title footer-list-title ">Central do administrador:</p>
 
                     <!-- Formulário de entrada -->
-                    <form action="#" method="post" class="footer-form" onsubmit="return abrirModal()">
-                        <input type="text" name="cod_adm" required placeholder="Seu código de administrador..."
-                            autocomplete="off" class="input-field">
+                    <form method="post" class="footer-form" onsubmit="return abrirModal()">
+                        <input type="number" name="cod_adm" placeholder="Seu código de administrador..." class="input-field">
                         <button type="submit" class="btn" data-btn>Entrar</button>
                     </form>
 
@@ -641,10 +636,18 @@ session_start();
 
                     <!-- Script para exibir o modal e redirecionar -->
                     <script>
+                        
                         function abrirModal() {
-                            document.getElementById("modal").style.display = "block";
-                            return false; // Impede o envio do formulário
-                        }
+    const codAdmInput = document.querySelector('input[name="cod_adm"]').value;
+
+    if (codAdmInput === '100') {
+        document.getElementById("modal").style.display = "block"; // Abre o modal
+        return false; // Impede o envio do formulário
+    } else {
+        alert("Código inválido. Tente novamente."); // Mensagem de erro
+        return false; // Impede o envio do formulário
+    }
+}
 
                         function redirecionarPagina(pagina) {
                             window.location.href = pagina;

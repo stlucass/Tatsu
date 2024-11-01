@@ -50,6 +50,8 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./assets/images/dragaoicone.png" type="image/x-icon">
+
     <title>Atualizar Usuário</title>
 </head>
 <body>
@@ -59,7 +61,7 @@ $conn->close();
         <p style="color: red;"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></p>
     <?php endif; ?>
     
-    <form action="atualizar_usuario.php" method="POST">
+    <form action="index.php" method="POST">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" value="<?php echo isset($usuario['nome']) ? htmlspecialchars($usuario['nome']) : ''; ?>" required><br>
 
@@ -70,6 +72,8 @@ $conn->close();
         <input type="password" id="senha" name="senha" required><br>
 
         <input type="submit" value="Atualizar">
+    <a href="index.php" class="btn" data-btn>Voltar</a><br />
+
     </form>
 </body>
 </html>
