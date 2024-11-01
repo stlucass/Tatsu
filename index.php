@@ -98,14 +98,15 @@ session_start();
                 <div class="dropdown">
         <div><img src="assets/images/perfil.png" style= " width: 55px;">   
         <div class="dropdown-content">
+        <a href="visualizar_usuario.php">Seus Dados</a>
             <a href="crud_usuario.php">Alterar Usuário</a>
             <a href="logout.php">Sair</a>
         </div>
     </div>
             <?php else: ?>
                 <!-- Se a sessão não estiver ativa, exibe os botões de Cadastro e Login -->
-                <a href="cadastro.php" class="btn" data-btn>CADASTRO</a>
-                <a href="login.php" class="btn" data-btn>LOGIN</a>
+                <a href="cadastro.php" class="btn" data-btn>CADASTRAR</a>
+                <a href="login.php" class="btn" data-btn>ENTRAR</a>
             <?php endif; ?>
 
             <?php
