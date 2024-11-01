@@ -111,12 +111,14 @@ session_start();
             <?php
             // Verifica se o formulário foi enviado
          if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['cod_adm'])) {
     $cod_adm = $_POST['cod_adm'];
     if ($cod_adm == '100') {
         echo "<script>abrirModal();</script>";
     } else {
         $erro = "Código inválido. Tente novamente.";
     }
+}
 }
 
 
