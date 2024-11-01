@@ -35,7 +35,37 @@ session_start();
 
 <body id="top">
 
+    <!-- HEADER -->
+    <style>
+    .dropdown {
+    position: relative;
+    display: inline-block;
+}
 
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+</style>
     <!-- HEADER -->
     <header class="header active" data-header>
         <div class="container">
@@ -62,12 +92,20 @@ session_start();
                 </ul>
             </nav>
             <?php if (isset($_SESSION['email'])): ?>
-            <!-- Se a sessão estiver ativa, exibe o botão Sair -->
-            <a href="logout.php" class="btn" data-btn>SAIR</a>
+                <!-- Se a sessão estiver ativa, exibe o botão Sair -->
+                <a href="carrinho.php" class="btn" data-btn>CARRINHO</a>
+                <a href="pedidos.php" class="btn" data-btn>PEDIDOS</a>
+                <div class="dropdown">
+        <div><img src="assets/images/perfil.png" style= " width: 55px;">   
+        <div class="dropdown-content">
+            <a href="crud_usuario.php">Alterar Usuário</a>
+            <a href="logout.php">Sair</a>
+        </div>
+    </div>
             <?php else: ?>
-            <!-- Se a sessão não estiver ativa, exibe os botões de Cadastro e Login -->
-            <a href="cadastro.php" class="btn" data-btn>CADASTRO</a>
-            <a href="login.php" class="btn" data-btn>LOGIN</a>
+                <!-- Se a sessão não estiver ativa, exibe os botões de Cadastro e Login -->
+                <a href="cadastro.php" class="btn" data-btn>CADASTRO</a>
+                <a href="login.php" class="btn" data-btn>LOGIN</a>
             <?php endif; ?>
 
             <?php
@@ -526,12 +564,94 @@ session_start();
 
                     <p class="title footer-list-title ">Central do administrador:</p>
 
-                    <form action="reserva_adm.php" method="post" class="footer-form">
+                    <!-- Formulário de entrada -->
+                    <form action="#" method="post" class="footer-form" onsubmit="return abrirModal()">
                         <input type="text" name="cod_adm" required placeholder="Seu código de administrador..."
                             autocomplete="off" class="input-field">
-
                         <button type="submit" class="btn" data-btn>Entrar</button>
                     </form>
+
+                    <!-- Modal personalizado -->
+                    <div id="modal" class="modal">
+                        <div class="modal-content">
+                            <p>Para qual página deseja ser direcionado?</p>
+                            <div class="modal-buttons"> <!-- Novo contêiner para os botões -->
+                                <button onclick="redirecionarPagina('reserva_adm.php')"
+                                    class="modal-button reserva">Reserva</button>
+                                <button onclick="redirecionarPagina('delivery_adm.php')"
+                                    class="modal-button delivery">Delivery</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Estilos para o modal -->
+                    <style>
+                        .modal {
+                            display: none;
+                            position: fixed;
+                            z-index: 1000;
+                            left: 0;
+                            top: 0;
+                            width: 100%;
+                            height: 100%;
+                            background-color: rgba(0, 0, 0, 0.5);
+                            backdrop-filter: blur(4px);
+                        }
+
+                        .modal-content {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            background: #111;
+                            padding: 20px;
+                            border-radius: 8px;
+                            text-align: center;
+                        }
+
+                        .modal-buttons {
+                            display: flex;
+                            /* Define como flex container */
+                            justify-content: center;
+                            /* Centraliza os botões */
+                            margin-top: 10px;
+                            /* Espaçamento acima dos botões */
+                        }
+
+                        .modal-button {
+                            padding: 10px 20px;
+                            margin: 0 5px;
+                            /* Espaçamento entre os botões */
+                            border: none;
+                            border-radius: 5px;
+                            cursor: pointer;
+                        }
+
+                        .reserva {
+                            background-color: #800000;
+                            color: #fff;
+                            border-radius: 30px;
+                        }
+
+                        .delivery {
+                            background-color: #800000;
+                            color: #fff;
+                            border-radius: 30px;
+                        }
+                    </style>
+
+                    <!-- Script para exibir o modal e redirecionar -->
+                    <script>
+                        function abrirModal() {
+                            document.getElementById("modal").style.display = "block";
+                            return false; // Impede o envio do formulário
+                        }
+
+                        function redirecionarPagina(pagina) {
+                            window.location.href = pagina;
+                        }
+                    </script>
+
+
 
                 </div>
 
@@ -564,7 +684,6 @@ session_start();
     <!-- LINK IONICON -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
 </body>
 
 </html>

@@ -1,15 +1,46 @@
 <?php
 session_start();
 include('data/conexao.php');
-    // Verifica se a sessão está ativa
- if (!isset($_SESSION['email'])) {
-        echo '<script>alert("Você precisa estar logado para acessar esta página.");</script>';
-        // Usar exit() após echo pode prevenir o redirecionamento.
-        echo '<script>window.location.href = "login.php";</script>';
-        exit();
-    };
 
-// Simulação de dados do banco de dados
+// Simulando um usuário logado
+$usuario_id = 1; // Alterar para o ID real do usuário
+
+// Inicializa o carrinho se não existir
+if (!isset($_SESSION['carrinho'])) {
+    $_SESSION['carrinho'] = [];
+}
+
+// Processa a adição de produtos ao carrinho
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['product_id']) && isset($_POST['quantidade'])) {
+    $product_id = intval($_POST['product_id']);
+    $quantidade = intval($_POST['quantidade']);
+
+    // Adiciona ou atualiza a quantidade do produto no carrinho
+    if (isset($_SESSION['carrinho'][$product_id])) {
+        $_SESSION['carrinho'][$product_id] += $quantidade; // Atualiza a quantidade
+    } else {
+        $_SESSION['carrinho'][$product_id] = $quantidade; // Adiciona novo produto
+    }
+}
+
+// Processa a remoção de produtos do carrinho
+if (isset($_POST['remove_id'])) {
+    $remove_id = intval($_POST['remove_id']);
+    unset($_SESSION['carrinho'][$remove_id]); // Remove o produto
+}
+
+// Processa a atualização da quantidade do produto no carrinho
+if (isset($_POST['update_id']) && isset($_POST['update_quantidade'])) {
+    $update_id = intval($_POST['update_id']);
+    $update_quantidade = intval($_POST['update_quantidade']);
+    if ($update_quantidade > 0) {
+        $_SESSION['carrinho'][$update_id] = $update_quantidade; // Atualiza a quantidade
+    } else {
+        unset($_SESSION['carrinho'][$update_id]); // Remove se a quantidade for 0
+    }
+}
+
+// Obtém os produtos para exibir
 $products = [
     1 => ['nome' => 'Sushi de Salmão', 'preco' => 35.00, 'imagem' => 'assets/images/prato_1.jpg'],
     2 => ['nome' => 'Rámen', 'preco' => 45.00, 'imagem' => 'assets/images/prato_2.jpg'],
@@ -21,6 +52,7 @@ $products = [
     8 => ['nome' => 'Yakisoba', 'preco' => 30.00, 'imagem' => 'assets/images/prato_4.jpg'],
     9 => ['nome' => 'Ceviche', 'preco' => 40.00, 'imagem' => 'assets/images/prato_5.jpg'],
 ];
+
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +61,9 @@ $products = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Tatsu Sushi Bar</title>
+    <title>Carrinho Tatsu Sushi Bar</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <link rel="icon" href="./assets/images/dragaoicone.png" type="image/x-icon">
     <style>
         body {
@@ -71,35 +105,38 @@ $products = [
             width: 88%;
         }
 
-        .menu {
+        .carrinho {
             width: 90%;
             max-width: 1200px;
             margin: 20px auto;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            flex-direction: column;
         }
 
-        .product {
-            width: calc(25% - 20px);
-            height: fit-content;
+        .produto {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 15px;
             margin: 10px;
-            border-style: solid #000;
-            border-radius: 20px 10px 50px;
-            box-shadow: 0 2px 10px #000;
             background-color: #222;
-            color: #f0f0f0;
-            transition: transform 0.2s;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px #000;
         }
 
-        .product img {
-            max-width: 100%;
+        .produto img {
+            max-width: 100px;
             border-radius: 8px;
         }
 
-        .product:hover {
-            transform: translateY(-5px);
+        .produto h2 {
+            margin: 0;
+        }
+
+        .quantidade-input {
+            padding: 5px;
+            width: 50px;
+            margin-right: 10px;
         }
 
         button {
@@ -114,21 +151,6 @@ $products = [
 
         button:hover {
             background-color: #600000;
-        }
-
-        .quantidade-input {
-            padding: 10px;
-            margin-bottom: 5%;
-            border: 1px solid rgb(18, 18, 18);
-            border-radius: 30px;
-            background-color: #171717;
-            color: #f0f0f0;
-            width: 90%;
-        }
-
-        .quantidade-input:focus {
-            border-color: #800000;
-            outline: none;
         }
 
         .btnvoltar {
@@ -172,26 +194,7 @@ $products = [
         .btnvoltar:is(:hover, :focus-visible)::before {
             transform: translate(-50%, -50%) scale(1);
         }
-
-        @media (max-width: 1200px) {
-            .product {
-                width: calc(33.33% - 20px);
-            }
-        }
-
-        @media (max-width: 800px) {
-            .product {
-                width: calc(50% - 20px);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .product {
-                width: 100%;
-            }
-        }
     </style>
-
 </head>
 
 <body>
@@ -203,20 +206,46 @@ $products = [
             <h1>Menu Tatsu Sushi bar</h1>
         </div>
     </center>
-    <div class="menu">
-        <?php foreach ($products as $id => $product): ?>
-            <div class="product">
-                <img src="<?php echo $product['imagem']; ?>" alt="<?php echo $product['nome']; ?>">
-                <h2><?php echo $product['nome']; ?></h2>
-                <h2>Preço: R$ <?php echo number_format($product['preco'], 2, ',', '.'); ?></h2>
-                <form action="carrinho.php" method="post" style="display: inline;">
-                    <input type="hidden" name="product_id" value="<?php echo $id; ?>">
-                    <input type="number" name="quantidade" min="1" class="quantidade-input" placeholder="Quantidade" required>
-                    <button type="submit">Adicionar ao carrinho</button>
+    <div class="carrinho">
+        <?php if (empty($_SESSION['carrinho'])): ?>
+            <p>Seu carrinho está vazio.</p>
+        <?php else: ?>
+            <?php foreach ($_SESSION['carrinho'] as $id => $quantidade): ?>
+                <div class="produto">
+                    <img src="<?php echo $products[$id]['imagem']; ?>" alt="<?php echo $products[$id]['nome']; ?>">
+                    <h2><?php echo $products[$id]['nome']; ?></h2>
+                    <p>Preço: R$ <?php echo number_format($products[$id]['preco'], 2, ',', '.'); ?></p>
+                    <p>Quantidade:
+                    <form action="" method="post" style="display:inline;">
+                        <input type="number" name="update_quantidade" class="quantidade-input"
+                            value="<?php echo $quantidade; ?>" min="0" required>
+                        <input type="hidden" name="update_id" value="<?php echo $id; ?>">
+                        <button type="submit">Atualizar</button>
+                    </form>
+                    </p>
+                    <form action="" method="post" style="display:inline;">
+                        <input type="hidden" name="remove_id" value="<?php echo $id; ?>">
+                        <button type="submit">Remover</button>
+                    </form>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+        <?php if (empty($_SESSION['carrinho'])): ?>
+            <form action="delivery.php" method="get">
+                <button type="submit">Ver Menu</button>
+            </form>
+        <?php else: ?>
+            <div style="display: flex; gap: 10px;"> <!-- Adiciona um espaço entre os botões -->
+                <form action="endereco.php" method="post">
+                    <button type="submit" id="btn-fazer-pedido">Fazer Pedido</button>
+                </form>
+                <form action="delivery.php" method="get">
+                    <button type="submit">Ver Menu</button>
                 </form>
             </div>
-        <?php endforeach; ?>
+        <?php endif; ?>
     </div>
+
 </body>
 
 </html>

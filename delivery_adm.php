@@ -1,6 +1,6 @@
 <?php
-        session_start();
-        include('data/conexao.php');
+session_start();
+include('data/conexao.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Reserva Tatsu</title>
+    <title>Pedidos Tatsu</title>
     <link href="assets/css_CRUD/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="assets/css_CRUD/style.css" rel="stylesheet" media="screen">
     <link href="assets/css_CRUD/validationEngine.jquery.css" rel="stylesheet" media="screen">
@@ -43,7 +43,6 @@
             font-size: 4rem;
             text-align: center;
             text-transform: uppercase;
-            color: ;
             padding: 5px;
             font-weight: 400;
             border-radius: 10px;
@@ -129,6 +128,30 @@
             transform: translate(-50%, -50%) scale(1);
             text-decoration: none;
         }
+
+        /* Estilos para o campo de seleção e botão de atualização */
+        select[name="status"] {
+            padding: 5px;
+            background-color: #000;
+            color: #f0f0f0;
+            border: 1px solid #000;
+            border-radius: 10px;
+        }
+
+        .btn-update-status {
+            margin-left: 5px;
+            margin-right: -5px;
+            background-color: #800000;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 30px;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-update-status:hover {
+            background-color: #600000;
+        }
     </style>
 </head>
 
@@ -138,26 +161,26 @@
     echo "<a href='index.php' class='btnvoltar' data-btn>Voltar</a>";
     ?>
     <div class="container">
-        <h1>Reserva Tatsu</h1>
+        <h1>Pedidos Tatsu</h1>
         <?php
 
         // Executa a consulta SQL
-        $sqlSelect = "SELECT * FROM reserva";
+        $sqlSelect = "SELECT p.id, u.NOME_USUARIO as nome_cliente, p.data_pedido, p.total, p.status 
+              FROM pedidos p 
+              JOIN usuario u ON p.usuario_id = u.ID_USUARIO";
+
         $stmt = $conn->query($sqlSelect);
 
         try {
             echo "<table class='table'>
                     <thead>
                         <tr>
-                            <th>NOME</th>
-                            <th>EMAIL</th>
-                            <th>QUANTIDADE</th>
-                            <th>DIA</th>
-                            <th>HORA</th>
-                            <th>ÁREA</th>
-                            <th>TIPO</th>
-                            <th>ID</th>
-                            <th>OBSERVAÇÕES</th>
+                            <th>ID do Pedido</th>
+                            <th>Nome do Cliente</th>
+                            <th>Data do Pedido</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Atualizar Situação</th>
                         </tr>
                     </thead>
                     <tbody>";
@@ -165,19 +188,26 @@
             if ($stmt->num_rows > 0) {
                 while ($row = $stmt->fetch_assoc()) {
                     echo "<tr>
-                            <td>" . htmlspecialchars($row["NOME_CLIENTE"]) . "</td>
-                            <td>" . htmlspecialchars($row["EMAIL_CLIENTE"]) . "</td>
-                            <td>" . htmlspecialchars($row["QUANTIDADE_PESSOAS"]) . "</td>
-                            <td>" . htmlspecialchars($row["DIA_RESERVA"]) . "</td>
-                            <td>" . htmlspecialchars($row["HORA_RESERVA"]) . "</td>
-                            <td>" . htmlspecialchars($row["AREA_RESTAURANTE"]) . "</td>
-                            <td>" . htmlspecialchars($row["TIPO_RESERVA"]) . "</td>
-                            <td>" . htmlspecialchars($row["ID_RESERVA"]) . "</td>
-                            <td>" . htmlspecialchars($row["OBSERVACOES"]) . "</td>
+                            <td>" . htmlspecialchars($row["id"]) . "</td>
+                            <td>" . htmlspecialchars($row["nome_cliente"]) . "</td>
+                            <td>" . htmlspecialchars($row["data_pedido"]) . "</td>
+                            <td>R$ " . number_format($row["total"], 2, ',', '.') . "</td>
+                            <td>" . htmlspecialchars($row["status"]) . "</td>
+                            <td>
+                                <form method='POST' action='atualiza_status.php'>
+                                    <input type='hidden' name='pedido_id' value='" . htmlspecialchars($row["id"]) . "'>
+                                    <select name='status'>
+                                        <option value='Pendente'>Pendente</option>
+                                        <option value='Enviado'>Enviado</option>
+                                        <option value='Cancelado'>Cancelado</option>
+                                    </select>
+                                    <button type='submit' class='btn-update-status'>Atualizar Status</button>
+                                </form>
+                            </td>
                           </tr>";
                 }
             } else {
-                echo "<tr><td colspan='9'>Nenhum registro encontrado</td></tr>";
+                echo "<tr><td colspan='6'>Nenhum pedido encontrado</td></tr>";
             }
             echo "</tbody></table>";
         } catch (Exception $erro) {
